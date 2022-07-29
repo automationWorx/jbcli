@@ -13,7 +13,7 @@ fi
 if [ "$AWSSERVICE" == "rds" ]; then
   VAGOVSERVICE=$(gum choose "vets-api" "sentry" "jenkins")
   if [ "$VAGOVSERVICE" == "vets-api" ]; then
-    RDSINFO=$(gum choose "identifiers" "engine versions")
+    RDSINFO=$(gum choose "engine versions")
     if [ "$RDSINFO" == "engine versions" ]; then
       gum spin -s dot --title "Working on it..." -- sleep 3 && \
       for db in $(aws rds describe-db-instances | jq -r '.DBInstances[].DBInstanceIdentifier' | grep $VAGOVSERVICE); do echo $db && aws rds describe-db-instances --db-instance-identifier $db | jq -r '.DBInstances[] | .Engine, .EngineVersion' && echo ""; done
