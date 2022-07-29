@@ -5,8 +5,12 @@
 set -e
 
 TYPE=$(gum choose "info" "tag" "create" "delete" "create temporary IAM user password")
-IAMUSER=$(gum input --placeholder "IAM username")
 
-gum spin -s meter --title "Working on it..." -- sleep 3
-
-gum confirm "Create temporary credentials for $IAMUSER?" && export "TEMPPASS=$(curl -sL pwgen.btmn.dev/20)" && echo "Temporary password is: $TEMPPASS"  && aws iam create-login-profile --user-name "$IAMUSER" --password "$TEMPPASS" --password-reset-required
+if [ "$TYPE" == "create temporary IAM user password" ]; then
+  IAMUSER=$(gum input --placeholder "IAM username") && \
+	  gum confirm "Create temporary credentials for $IAMUSER?" && \
+	  gum spin -s meter --title "Working on it..." -- sleep 3 && \
+	  export "TEMPPASS=$(curl -sL pwgen.btmn.dev/20)" && \
+	  echo "Temporary password is: $TEMPPASS" && \
+	  aws iam create-login-profile --user-name "$IAMUSER" --password "$TEMPPASS" --password-reset-required
+fi
