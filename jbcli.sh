@@ -6,6 +6,10 @@ set -e
 
 TYPE=$(gum choose "info" "tag" "create" "delete" "IAM password")
 
+###############################
+######## Info options #########
+###############################
+
 if [ "$TYPE" == "info" ]; then
   AWSSERVICE=$(gum choose "ec2" "rds")
 fi
@@ -23,6 +27,10 @@ if [ "$AWSSERVICE" == "rds" ]; then
     jq -r '.DBInstances[] | .Engine, .EngineVersion' && echo ""; done
   fi
 fi
+
+################################
+##### IAM password options #####
+################################
 
 if [ "$TYPE" == "IAM password" ]; then
   USERPASS=$(gum choose "create first-time login credentials" "update existing password")
