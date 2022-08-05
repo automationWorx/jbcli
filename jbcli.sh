@@ -134,7 +134,7 @@ if [ "$ACTION" == "retrieve" ]; then
   RETRIEVEPARAM=$(gum input --placeholder "Enter Parameter Store path to value you wish to view")
   gum confirm "Retrieve secret with path $RETRIEVEPARAM?"
   gum spin -s dot --title "Working on it..." -- sleep 3
-  aws ssm put-parameter --name "$RETRIEVEPARAM" \
+  aws ssm get-parameter --name "$RETRIEVEPARAM" \
   --with-decryption | \
   jq -r .Parameter.Value
 fi
