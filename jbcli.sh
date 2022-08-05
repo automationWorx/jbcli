@@ -91,7 +91,7 @@ if [ "$ACTION" == "create" ]; then
       if [ "$ENV" == "staging" ]; then
         KEY=$(gum input --placeholder "Enter key / name of secret")
         SECRETVALUE=$(gum input --placeholder "Enter secret value")
-        gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY"
+        gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY?"
         gum spin -s dot --title "Creating parameter..." -- sleep 3
         aws ssm put-parameter --name /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY \
         --type SecureString \
@@ -100,7 +100,7 @@ if [ "$ACTION" == "create" ]; then
       if [ "$ENV" == "sandbox" ]; then
         KEY=$(gum input --placeholder "Enter key / name of secret")
         SECRETVALUE=$(gum input --placeholder "Enter secret value")
-        gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY"
+        gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY?"
         gum spin -s dot --title "Creating parameter..." -- sleep 3
         aws ssm put-parameter --name /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY \
         --type SecureString \
@@ -109,7 +109,7 @@ if [ "$ACTION" == "create" ]; then
       if [ "$ENV" == "prod" ]; then
         KEY=$(gum input --placeholder "Enter key / name of secret")
         SECRETVALUE=$(gum input --placeholder "Enter secret value")
-        gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY"
+        gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY?"
         gum spin -s dot --title "Creating parameter..." -- sleep 3
         aws ssm put-parameter --name /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY \
         --type SecureString \
