@@ -117,7 +117,28 @@ if [ "$ACTION" == "create" ]; then
       fi
     fi
 fi
-        
+
+if [ "$ACTION" == "update" ]; then
+  UPDATEPARAM=$(gum input --placeholder "Enter Parameter Store path to value you wish to view")
+  SECRETVALUE=$(gum input --placeholder "Enter secret value")
+  gum confirm "Update secret with path $UPDATEPARAM?"
+  gum spin -s dot --title "Working on it..." -- sleep 3
+  aws ssm put-parameter --name $UPDATEPARAM \
+  --type SecureString \
+  --value $SECRETVALUE \
+  --overwrite
+  echo "Parameter updated!"
+fi
+
+if [ "$ACTION" == "retrieve" ]; then
+  RETRIEVEPARAM=$(gum input --placeholder "Enter Parameter Store path to value you wish to view")
+  gum confirm "Retrieve secret with path $RETRIEVEPARAM?"
+  gum spin -s dot --title "Working on it..." -- sleep 3
+  aws ssm put-parameter --name "$RETRIEVEPARAM" \
+  --with-decryption | \
+  jq -r .Parameter.Value
+fi
+
 if [ "$ACTION" == "delete" ]; then
   DELETEPARAM=$(gum input --placeholder "Enter Parameter Store path to value you wish to delete")
   gum confirm "Delete secret with path $DELETEPARAM?"
