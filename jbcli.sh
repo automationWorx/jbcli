@@ -19,7 +19,7 @@ if [ "$AWSSERVICE" == "rds" ]; then
   if [ "$RDSINFO" == "engine versions" ]; then
     VAGOVSERVICE=$(gum choose "vets-api" "sentry" "cms" "gi-bill-data-service" \
     "console-api" "console-ui" "grafana" "keycloak")
-    gum spin -s dot --title "Working on it..." -- sleep 3
+    gum spin -s dot --title "Retrieving database info..." -- sleep 3
     for db in $(aws rds describe-db-instances | \
     jq -r '.DBInstances[].DBInstanceIdentifier' | \
     grep $VAGOVSERVICE | grep -wv appeals); do echo $db
@@ -51,7 +51,7 @@ fi
 if [ "$USERPASS" == "create first-time login credentials" ]; then
   IAMUSER=$(gum input --placeholder "IAM username")
 	gum confirm "Create temporary credentials for $IAMUSER?"
-	gum spin -s dot --title "Working on it..." -- sleep 3
+	gum spin -s dot --title "Creating credentials for $IAMUSER..." -- sleep 3
 	export "TEMPPASS=$(curl -sL pwgen.btmn.dev/20)!"
 	echo "Temporary password is: $TEMPPASS"
 	aws iam create-login-profile --user-name "$IAMUSER" --password "$TEMPPASS" --password-reset-required
@@ -60,7 +60,7 @@ fi
 if [ "$USERPASS" == "update existing password" ]; then
   IAMUSER=$(gum input --placeholder "IAM username")
   gum confirm "Update existing password for $IAMUSER?"
-  gum spin -s dot --title "Working on it..." -- sleep 3
+  gum spin -s dot --title "Updating credentials for $IAMUSER..." -- sleep 3
   export "TEMPPASS=$(curl -sL pwgen.btmn.dev/20)!"
   echo "Temporary password is: $TEMPPASS"
   aws iam update-login-profile --user-name "$IAMUSER" --password "$TEMPPASS" --password-reset-required
@@ -83,7 +83,7 @@ if [ "$ACTION" == "create" ]; then
         KEY=$(gum input --placeholder "Enter key / name of secret")
         SECRETVALUE=$(gum input --placeholder "Enter secret value")
         gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY?"
-        gum spin -s dot --title "Working on it..." -- sleep 3
+        gum spin -s dot --title "Creating parameter..." -- sleep 3
         aws ssm put-parameter --name /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY \
         --type SecureString \
         --value $SECRETVALUE
@@ -92,7 +92,7 @@ if [ "$ACTION" == "create" ]; then
         KEY=$(gum input --placeholder "Enter key / name of secret")
         SECRETVALUE=$(gum input --placeholder "Enter secret value")
         gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY"
-        gum spin -s dot --title "Working on it..." -- sleep 3
+        gum spin -s dot --title "Creating parameter..." -- sleep 3
         aws ssm put-parameter --name /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY \
         --type SecureString \
         --value $SECRETVALUE
@@ -101,7 +101,7 @@ if [ "$ACTION" == "create" ]; then
         KEY=$(gum input --placeholder "Enter key / name of secret")
         SECRETVALUE=$(gum input --placeholder "Enter secret value")
         gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY"
-        gum spin -s dot --title "Working on it..." -- sleep 3
+        gum spin -s dot --title "Creating parameter..." -- sleep 3
         aws ssm put-parameter --name /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY \
         --type SecureString \
         --value $SECRETVALUE
@@ -110,7 +110,7 @@ if [ "$ACTION" == "create" ]; then
         KEY=$(gum input --placeholder "Enter key / name of secret")
         SECRETVALUE=$(gum input --placeholder "Enter secret value")
         gum confirm "Create new secret with path /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY"
-        gum spin -s dot --title "Working on it..." -- sleep 3
+        gum spin -s dot --title "Creating parameter..." -- sleep 3
         aws ssm put-parameter --name /dsva-vagov/$VASERVICE/$ENV/$INTSERVICE/$KEY \
         --type SecureString \
         --value $SECRETVALUE
@@ -122,7 +122,7 @@ if [ "$ACTION" == "update" ]; then
   UPDATEPARAM=$(gum input --placeholder "Enter Parameter Store path to value you wish to view")
   SECRETVALUE=$(gum input --placeholder "Enter secret value")
   gum confirm "Update secret with path $UPDATEPARAM?"
-  gum spin -s dot --title "Working on it..." -- sleep 3
+  gum spin -s dot --title "Updating parameter..." -- sleep 3
   aws ssm put-parameter --name $UPDATEPARAM \
   --type SecureString \
   --value $SECRETVALUE \
@@ -133,7 +133,7 @@ fi
 if [ "$ACTION" == "retrieve" ]; then
   RETRIEVEPARAM=$(gum input --placeholder "Enter Parameter Store path to value you wish to view")
   gum confirm "Retrieve secret with path $RETRIEVEPARAM?"
-  gum spin -s dot --title "Working on it..." -- sleep 3
+  gum spin -s dot --title "Retrieving parameter..." -- sleep 3
   aws ssm get-parameter --name "$RETRIEVEPARAM" \
   --with-decryption | \
   jq -r .Parameter.Value
@@ -142,7 +142,7 @@ fi
 if [ "$ACTION" == "delete" ]; then
   DELETEPARAM=$(gum input --placeholder "Enter Parameter Store path to value you wish to delete")
   gum confirm "Delete secret with path $DELETEPARAM?"
-  gum spin -s dot --title "Working on it..." -- sleep 3
+  gum spin -s dot --title "Deleting parameter..." -- sleep 3
   aws ssm delete-parameter --name $DELETEPARAM
   echo "Parameter deleted!"
 fi
