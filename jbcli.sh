@@ -50,11 +50,11 @@ fi
 
 if [ "$USERPASS" == "create first-time login credentials" ]; then
   IAMUSER=$(gum input --placeholder "IAM username")
-	gum confirm "Create temporary credentials for $IAMUSER?"
-	gum spin -s dot --title "Creating credentials for $IAMUSER..." -- sleep 3
-	export "TEMPPASS=$(curl -sL pwgen.btmn.dev/20)!"
-	echo "Temporary password is: $TEMPPASS"
-	aws iam create-login-profile --user-name "$IAMUSER" --password "$TEMPPASS" --password-reset-required
+  gum confirm "Create temporary credentials for $IAMUSER?"
+  gum spin -s dot --title "Creating credentials for $IAMUSER..." -- sleep 3
+  export "TEMPPASS=$(curl -sL pwgen.btmn.dev/20)!"
+  echo "Temporary password is: $TEMPPASS"
+  aws iam create-login-profile --user-name "$IAMUSER" --password "$TEMPPASS" --password-reset-required
 fi
 
 if [ "$USERPASS" == "update existing password" ]; then
