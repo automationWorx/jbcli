@@ -17,8 +17,8 @@ fi
 if [ "$AWSSERVICE" == "rds" ]; then
   RDSINFO=$(gum choose "engine versions")
   if [ "$RDSINFO" == "engine versions" ]; then
-    VAGOVSERVICE=$(gum choose "vets-api" "sentry" "cms" "gi-bill-data-service" \
-    "console-api" "console-ui" "grafana" "keycloak")
+    VAGOVSERVICE=$(gum choose "cms" "console-api" "console-ui" \
+    "gi-bill-data-service" "grafana" "keycloak" "sentry" "vets-api")
     gum spin -s dot --title "Retrieving database info..." -- sleep 3
     for db in $(aws rds describe-db-instances | \
     jq -r '.DBInstances[].DBInstanceIdentifier' | \
