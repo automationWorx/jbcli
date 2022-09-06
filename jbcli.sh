@@ -61,7 +61,7 @@ if [ "$USERPASS" == "update existing password" ]; then
   IAMUSER=$(gum input --placeholder "IAM username")
   gum confirm "Update existing password for $IAMUSER?"
   gum spin -s dot --title "Updating credentials for $IAMUSER..." -- sleep 3
-  export "TEMPPASS=$(curl -sL pwgen.btmn.dev/20)!"
+  export "TEMPPASS=$(curl -sL pwgen.btmn.dev/20)1!"
   echo "Temporary password is: $TEMPPASS"
   aws iam update-login-profile --user-name "$IAMUSER" --password "$TEMPPASS" --password-reset-required
 fi
